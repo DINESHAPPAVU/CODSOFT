@@ -1,0 +1,50 @@
+import random
+import string
+
+def generate_password(length, complexity):
+    # Define character pools based on complexity levels
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase
+    digits = string.digits
+    special_chars = string.punctuation
+
+    # Adjust character pool based on the selected complexity
+    if complexity == 1:  # Only lowercase letters
+        char_pool = lowercase
+    elif complexity == 2:  # Lowercase and uppercase letters
+        char_pool = lowercase + uppercase
+    elif complexity == 3:  # Letters and digits
+        char_pool = lowercase + uppercase + digits
+    elif complexity == 4:  # Letters, digits, and special characters
+        char_pool = lowercase + uppercase + digits + special_chars
+    else:
+        raise ValueError("Invalid complexity level. Choose between 1 and 4.")
+
+    # Generate the password
+    password = ''.join(random.choice(char_pool) for _ in range(length))
+    return password
+
+def main():
+    print("Welcome to the Password Generator!")
+    try:
+        # Prompt the user for password length
+        length = int(input("Enter the desired length of the password: "))
+        if length <= 0:
+            raise ValueError("Password length must be greater than 0.")
+
+        # Prompt the user for password complexity
+        print("Select the password complexity level:")
+        print("1: Only lowercase letters")
+        print("2: Lowercase and uppercase letters")
+        print("3: Letters and digits")
+        print("4: Letters, digits, and special characters")
+        complexity = int(input("Enter the complexity level (1-4): "))
+
+        # Generate and display the password
+        password = generate_password(length, complexity)
+        print(f"Your generated password is: {password}")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
